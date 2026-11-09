@@ -1,10 +1,14 @@
 package it.unibo.mvc;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+//import java.awt.TextField;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,8 +16,8 @@ import java.util.Random;
 
 /**
  * This class is a simple application that writes a random number on a file.
- *
- * <p>
+ * 
+ *  <p>
  * This application does not exploit the model-view-controller pattern, and as
  * such is just to be used to learn the basics, not as a template for your
  * applications.
@@ -21,6 +25,7 @@ import java.util.Random;
 public class MiniGUI {
 
     private static final String TITLE = "A very simple GUI application";
+    private static final String TEST_RESULT = "result";
     private static final int PROPORTION = 5;
     private final Random randomGenerator = new Random();
     private final JFrame frame = new JFrame(TITLE);
@@ -35,13 +40,19 @@ public class MiniGUI {
         canvas.add(write, BorderLayout.CENTER);
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        /*
-         * Handlers
-         */
+        final JPanel pannel = new JPanel();
+        pannel.setLayout(new BoxLayout(pannel, BoxLayout.LINE_AXIS));
+        canvas.add(pannel, BorderLayout.CENTER);
+        pannel.add(write);
+        final JTextField lableResult = new JTextField(TEST_RESULT);
+        canvas.add(lableResult, BorderLayout.NORTH);
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                IO.println(randomGenerator.nextInt());
+                final int randomNum = randomGenerator.nextInt();
+                IO.println(randomNum);
+
+                lableResult.setText(TEST_RESULT + " = " + randomNum);
             }
         });
     }
